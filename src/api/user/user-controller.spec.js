@@ -7,10 +7,10 @@ const errors = require('restify-errors')
 const faker = require('faker')
 const helpers = require('test/helpers.spec')
 const InvalidArgumentError = require('src/common/custom-errors').InvalidArgumentError
-const UserService = require('./user-service')
+const UserController = require('./user-controller')
 
 /* eslint-disable no-unused-expressions */
-describe('UserService', () => {
+describe('UserController', () => {
   let Model = null
   let fakeUser = null
   let next = null
@@ -23,6 +23,7 @@ describe('UserService', () => {
     Model.find = function () {}
     Model.findById = function () {}
     Model.findByIdAndRemove = function () {}
+    Model.modelName = 'User'
     Model.prototype.save = function () {} // Part of the document instance
 
     fakeUser = {
@@ -39,22 +40,22 @@ describe('UserService', () => {
 
   describe('constructor', () => {
     it('should throw InvalidArgumentError when missing model', () => {
-      expect(() => new UserService()).to.throw(InvalidArgumentError)
+      expect(() => new UserController()).to.throw(InvalidArgumentError)
     })
   })
 
   describe('_handleError', () => {
-    let service = null
+    let controller = null
 
     beforeEach(() => {
-      service = new UserService(Model)
+      controller = new UserController(Model)
     })
 
     it('should throw BadRequestError on ValidationError', () => {
       let error = { name: 'ValidationError' }
       let expectedError = new errors.BadRequestError()
       next = sinon.spy()
-      service._handleError(error, next)
+      controller._handleError(error, next)
 
       expect(next.calledWithMatch(expectedError)).to.be.true
     })
@@ -63,7 +64,7 @@ describe('UserService', () => {
       let error = { name: 'FooError' }
       let expectedError = new errors.InternalServerError()
       next = sinon.spy()
-      service._handleError(error, next)
+      controller._handleError(error, next)
 
       expect(next.calledWithMatch(expectedError)).to.be.true
     })
@@ -84,19 +85,19 @@ describe('UserService', () => {
         }
       }
 
-      let service = new UserService(Model)
-      service.find(req, res, next)
+      let controller = new UserController(Model)
+      controller.find(req, res, next)
     })
 
     it('should handle errors', (done) => {
       sinon.stub(Model, 'find').rejects()
 
-      let service = new UserService(Model)
-      sinon.stub(service, '_handleError').callsFake(
+      let controller = new UserController(Model)
+      sinon.stub(controller, '_handleError').callsFake(
         (err, next) => helpers.fakeErrorHandler(err, done)
       )
 
-      service.find()
+      controller.find()
     })
   })
 
@@ -115,8 +116,8 @@ describe('UserService', () => {
         }
       })
 
-      let service = new UserService(Model)
-      service._findById(req, res, next)
+      let controller = new UserController(Model)
+      controller._findById(req, res, next)
     })
 
     it('should send NotFoundError when user is not found', (done) => {
@@ -133,20 +134,20 @@ describe('UserService', () => {
         }
       })
 
-      let service = new UserService(Model)
-      service._findById(req, res, next)
+      let controller = new UserController(Model)
+      controller._findById(req, res, next)
     })
 
     it('should handle errors', (done) => {
       sinon.stub(Model, 'findById').rejects()
       req.params.id = fakeUser._Id
 
-      let service = new UserService(Model)
-      sinon.stub(service, '_handleError').callsFake(
+      let controller = new UserController(Model)
+      sinon.stub(controller, '_handleError').callsFake(
         (err, next) => helpers.fakeErrorHandler(err, done)
       )
 
-      service._findById(req)
+      controller._findById(req)
     })
   })
 
@@ -156,8 +157,8 @@ describe('UserService', () => {
       let spySend = sinon.spy(res, 'send')
       let spyNext = sinon.spy(next)
 
-      let service = new UserService(Model)
-      service.findById(req, res, spyNext)
+      let controller = new UserController(Model)
+      controller.findById(req, res, spyNext)
 
       expect(spySend.calledWithMatch(fakeUser)).to.be.true
       expect(spyNext.called).to.be.true
@@ -180,19 +181,19 @@ describe('UserService', () => {
         }
       }
 
-      let service = new UserService(Model)
-      service.create(req, res, next)
+      let controller = new UserController(Model)
+      controller.create(req, res, next)
     })
 
     it('should handle errors', (done) => {
       sinon.stub(Model.prototype, 'save').rejects()
 
-      let service = new UserService(Model)
-      sinon.stub(service, '_handleError').callsFake(
+      let controller = new UserController(Model)
+      sinon.stub(controller, '_handleError').callsFake(
         (err, next) => helpers.fakeErrorHandler(err, done)
       )
 
-      service.create(req, res, next)
+      controller.create(req, res, next)
     })
   })
 
@@ -216,8 +217,8 @@ describe('UserService', () => {
         }
       }
 
-      let service = new UserService(Model)
-      service.update(req, res, next)
+      let controller = new UserController(Model)
+      controller.update(req, res, next)
     })
 
     it('should handle errors', (done) => {
@@ -227,12 +228,12 @@ describe('UserService', () => {
 
       sinon.stub(req.user, 'save').rejects()
 
-      let service = new UserService(Model)
-      sinon.stub(service, '_handleError').callsFake(
+      let controller = new UserController(Model)
+      sinon.stub(controller, '_handleError').callsFake(
         (err, next) => helpers.fakeErrorHandler(err, done)
       )
 
-      service.update(req, res, next)
+      controller.update(req, res, next)
     })
   })
 
@@ -251,19 +252,19 @@ describe('UserService', () => {
         }
       }
 
-      let service = new UserService(Model)
-      service.delete(req, res, next)
+      let controller = new UserController(Model)
+      controller.delete(req, res, next)
     })
 
     it('should handle errors', (done) => {
       sinon.stub(Model, 'findByIdAndRemove').rejects()
 
-      let service = new UserService(Model)
-      sinon.stub(service, '_handleError').callsFake(
+      let controller = new UserController(Model)
+      sinon.stub(controller, '_handleError').callsFake(
         (err, next) => helpers.fakeErrorHandler(err, done)
       )
 
-      service.delete(req, res, next)
+      controller.delete(req, res, next)
     })
   })
 })

@@ -7,7 +7,7 @@ const log = require('src/common/log')
 /**
  * Implements the user-api
  */
-class UserService {
+class UserController {
   constructor (Model) {
     if (!Model) {
       throw new InvalidArgumentError(
@@ -34,6 +34,9 @@ class UserService {
     switch (err.name) {
       case 'ValidationError':
         next(new errors.BadRequestError())
+        break
+      case 'NotFoundError':
+        next(new errors.NotFoundError())
         break
       default:
         next(new errors.InternalServerError())
@@ -112,4 +115,4 @@ class UserService {
   }
 }
 
-module.exports = UserService
+module.exports = UserController
