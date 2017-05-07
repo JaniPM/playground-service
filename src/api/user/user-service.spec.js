@@ -9,16 +9,20 @@ const helpers = require('test/helpers.spec')
 const InvalidArgumentError = require('src/common/custom-errors').InvalidArgumentError
 const UserService = require('./user-service')
 
+/* eslint-disable no-unused-expressions */
 describe('UserService', () => {
-
-  let Model, fakeUser, next, req, res = null
+  let Model = null
+  let fakeUser = null
+  let next = null
+  let req = null
+  let res = null
 
   beforeEach(() => {
     // Mock the mongoose model
     Model = function () {}
     Model.find = function () {}
-    Model.findById = function() {}
-    Model.findByIdAndRemove = function() {}
+    Model.findById = function () {}
+    Model.findByIdAndRemove = function () {}
     Model.prototype.save = function () {} // Part of the document instance
 
     fakeUser = {
@@ -115,7 +119,7 @@ describe('UserService', () => {
       service._findById(req, res, next)
     })
 
-    it('should send NotFoundError when user is not found', () => {
+    it('should send NotFoundError when user is not found', (done) => {
       let expectedError = new errors.NotFoundError()
       sinon.stub(Model, 'findById').resolves(null)
 
@@ -149,7 +153,7 @@ describe('UserService', () => {
   describe('findById', () => {
     it('should put already found user to response and call next', () => {
       req.user = fakeUser
-      let spySend = sinon.spy(res, "send")
+      let spySend = sinon.spy(res, 'send')
       let spyNext = sinon.spy(next)
 
       let service = new UserService(Model)
@@ -262,5 +266,4 @@ describe('UserService', () => {
       service.delete(req, res, next)
     })
   })
-
 })

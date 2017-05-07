@@ -2,6 +2,8 @@
 
 const expect = require('chai').expect
 
+/* eslint-disable no-unused-expressions */
+
 /**
  * Makes sure that error handler is called with error in route handlers
  */

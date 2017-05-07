@@ -19,7 +19,8 @@
   "standard": {
     "globals": [
       "describe",
-      "it"
+      "it",
+      "beforeEach"
     ]
   },
   "dependencies": {
