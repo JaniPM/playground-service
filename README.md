@@ -10,3 +10,10 @@ Configuration can be changed from src/common/config.js.
 - **npm run test-coverage-report** (produces html coverage report as well).
 - **npm start** start service for development. Restarts after file changes.
 - **npm run standard** to validate JS-standard styling.
+
+## Structure
+- **src** for code
+- **test** for common test utilities and integration tests.
+  Unit tests are next to the implementation in **src**
+- Each api implementation is inside api/<entity> folder. 
+  Folders contains the layered architecture in itself.
