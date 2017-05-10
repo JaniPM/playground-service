@@ -29,6 +29,7 @@
     "mongoose-createdmodified": "0.0.2",
     "restify": "^4.3.0",
     "restify-errors": "^4.3.0",
+    "scrypt": "^6.0.3",
     "validator": "^7.0.0",
     "winston": "^2.3.1"
   },
