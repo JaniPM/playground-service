@@ -1,18 +1,20 @@
 'user strict'
 
+/*
 const UserController = require('./user/user-controller')
 const UserModel = require('./user/user-model')
+*/
 
 /**
  * Wires up controllers that implements api to correct data stores/models
- * @param  {[type]} server  [restify server]
+ * @param  {Object} server  [restify server]
  */
 const applyRoutes = (server) => {
   let routePrefix = 'api'
+  let apis = ['company']
 
-  require('./user')(server, {
-    routePrefix: routePrefix,
-    controller: new UserController(UserModel)
+  apis.forEach((name) => {
+    require(`./${name}`).applyRoutes(server, { routePrefix: routePrefix })
   })
 }
 

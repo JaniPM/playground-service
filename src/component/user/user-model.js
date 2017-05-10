@@ -1,7 +1,6 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const mongooseApiQuery = require('mongoose-api-query')
 const createdModified = require('mongoose-createdmodified').createdModifiedPlugin
 
 const UserSchema = new mongoose.Schema({
@@ -10,7 +9,6 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true }
 })
 
-UserSchema.plugin(mongooseApiQuery)
 UserSchema.plugin(createdModified, { index: true })
 
 module.exports = mongoose.model('User', UserSchema)

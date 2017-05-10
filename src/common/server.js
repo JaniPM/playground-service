@@ -23,10 +23,9 @@ server.on('after', restify.auditLogger({
 }))
 */
 
-// Logs the uncaughtExceptions but doesn't expose error details to response
 server.on('uncaughtException', (req, res, route, err) => {
-  log.error('Uncaught Exception: ' + err.stack)
-  res.send(500, 'Internal Server Error')
+  log.error('Unhandled error: %s', err.message)
+  res.send(500)
 })
 
 // Start server and connect to MongoDB

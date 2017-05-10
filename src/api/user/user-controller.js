@@ -1,6 +1,5 @@
 'use strict'
 
-const errors = require('restify-errors')
 const InvalidArgumentError = require('src/common/custom-errors').InvalidArgumentError
 const log = require('src/common/log')
 
