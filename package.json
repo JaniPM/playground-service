@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bunyan-winston-adapter": "^0.2.0",
+    "joi": "^10.4.1",
     "mongoose": "^4.9.5",
     "mongoose-createdmodified": "0.0.2",
     "restify": "^4.3.0",
