@@ -4,8 +4,8 @@ const expect = require('chai').expect
 const password = require('./password')
 
 /* eslint-disable no-unused-expressions */
-describe.only('Password', () => {
-  it('should produce random hash every time', async function () {
+describe('Password', () => {
+  it('should produce random hash every time', async () => {
     try {
       let plainPwd = 'P@ssw0rd'
       let plainPwd2 = 'P@ssw0rd'

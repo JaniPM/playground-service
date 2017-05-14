@@ -1,7 +1,7 @@
 'use strict'
 
 const Joi = require('joi')
-const userSchema = require('src/api/user/user-schema')
+const userSchema = require('src/api/user/schema/user-schema')
 const companySchema = require('./company-schema')
 
 const defaultPwdPolicy = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/

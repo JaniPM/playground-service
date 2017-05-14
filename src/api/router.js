@@ -11,7 +11,9 @@ const UserModel = require('./user/user-model')
  */
 const applyRoutes = (server) => {
   let routePrefix = 'api'
-  let apis = ['company']
+  let apis = [
+    'company'
+  ]
 
   apis.forEach((name) => {
     require(`./${name}`).applyRoutes(server, { routePrefix: routePrefix })

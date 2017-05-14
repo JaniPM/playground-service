@@ -9,10 +9,10 @@ const CompanyService = require('src/component/company/company-service')
  */
 const create = async (req, res, next) => {
   try {
-    log.debug('First create company')
+    log.debug('1. create company')
     let company = await CompanyService.create(req.body.company)
 
-    log.debug('Then create user')
+    log.debug('2. create first user as owner for it')
     let user = await UserService.create(
       Object.assign({}, req.body.user, { company_id: company._id })
     )

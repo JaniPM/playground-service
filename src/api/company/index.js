@@ -1,7 +1,7 @@
 'use strict'
 
 const validationHandler = require('../schema-validation-handler')
-const postSchema = require('./post-company-schema')
+const postSchema = require('./schema/post-company-schema')
 const controller = require('./company-controller')
 
 const applyRoutes = (server, options) => {
