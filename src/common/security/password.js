@@ -1,3 +1,5 @@
+'use strict'
+
 const scrypt = require('scrypt')
 const scryptParameters = scrypt.paramsSync(0.1)
 

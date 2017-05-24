@@ -5,6 +5,7 @@ const restify = require('restify')
 const bunyanWinston = require('bunyan-winston-adapter')
 const dbConnection = require('./db-connection')
 const log = require('./log')
+const auth = require('./security/auth')
 
 const server = restify.createServer({
   name: config.name,
@@ -13,6 +14,7 @@ const server = restify.createServer({
 })
 
 // Middleware
+server.use(auth.initialize())
 server.use(restify.jsonBodyParser({ mapParams: true }))
 server.use(restify.acceptParser(server.acceptable))
 server.use(restify.queryParser({ mapParams: true }))

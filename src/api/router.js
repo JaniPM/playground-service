@@ -11,6 +11,12 @@ const UserModel = require('./user/user-model')
  */
 const applyRoutes = (server) => {
   let routePrefix = 'api'
+
+  server.get(routePrefix, (req, res, next) => {
+    res.send('Welcome!')
+    next()
+  })
+
   let apis = [
     'company'
   ]
