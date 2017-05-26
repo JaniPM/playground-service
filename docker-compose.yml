@@ -1,0 +1,17 @@
+version: '3'
+services:
+  api:
+    build: .
+    command: npm start
+    volumes:
+      - .:/app/
+      # Prevent hiding node_module on container with host volume
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    links:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"

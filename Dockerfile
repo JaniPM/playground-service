@@ -1,5 +1,6 @@
 FROM node:7.10
 
+# TODO to docker-dompose.yml
 ENV NODE_ENV=development
 
 WORKDIR /app
@@ -10,7 +11,3 @@ RUN npm install
 COPY index.js /app
 COPY src /app/src
 COPY test /app/test
-
-EXPOSE 80
-
-CMD ["npm", "start"]

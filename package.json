@@ -7,6 +7,7 @@
     "test": "NODE_PATH=. LOG_LEVEL=debug nyc mocha src/**/**.spec.js",
     "test-coverage-report": "nyc report --reporter=html --reporter=text",
     "start": "NODE_PATH=. LOG_LEVEL=debug nodemon ./index.js",
+    "start-production": "NODE_PATH=. LOG_LEVEL=info node ./index.js",
     "standard": "standard"
   },
   "author": "JSi",
