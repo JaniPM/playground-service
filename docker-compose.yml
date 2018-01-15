@@ -1,7 +1,15 @@
 version: '3'
 services:
+
+  # Node Rest api-service
   api:
     build: .
+    container_name: "api"
+    environment:
+      - NODE_ENV=development
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_DB_NAME=playground_db
     command: npm start
     volumes:
       - .:/app/
@@ -9,12 +17,13 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
-    links:
-      - mongodb
     depends_on:
       - mongodb
+
+  # Database for the api-service
   mongodb:
     image: mongo
+    container_name: "mongo_db"
     volumes:
       - ./data/mongodb:/data/db
     ports:

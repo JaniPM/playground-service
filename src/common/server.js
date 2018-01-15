@@ -40,8 +40,16 @@ server.listen(config.port, () => {
     config.env
   )
 
+  log.info(
+    'Connecting to db in host: %s port: %d, database: %s.',
+    process.env.MONGO_HOST, 
+    process.env.MONGO_PORT,
+    process.env.MONGO_DB_NAME
+  )
+
   dbConnection(config.db.uri, config.db.options)
 })
 
 // Init all api routes from one file
+
 require('../api/router').applyRoutes(server)
