@@ -14,7 +14,7 @@ const server = restify.createServer({
 })
 
 // Middleware
-server.use(auth.initialize())
+//server.use(auth.initialize())
 server.use(restify.jsonBodyParser({ mapParams: true }))
 server.use(restify.acceptParser(server.acceptable))
 server.use(restify.queryParser({ mapParams: true }))
