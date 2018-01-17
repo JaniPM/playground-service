@@ -1,10 +1,5 @@
 'user strict'
 
-/*
-const UserController = require('./user/user-controller')
-const UserModel = require('./user/user-model')
-*/
-
 /**
  * Wires up controllers that implements api to correct data stores/models
  * @param  {Object} server  [restify server]

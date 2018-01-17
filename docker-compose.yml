@@ -17,14 +17,47 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
+    networks:
+      - api
     depends_on:
       - mongodb
 
-  # Database for the api-service
+  # Database cluster for the api-service
   mongodb:
     image: mongo
     container_name: "mongo_db"
+    command: mongod --replSet playground-mongo-set
     volumes:
       - ./data/mongodb:/data/db
+      - ./scripts:/init-scripts
     ports:
-      - "27017:27017"
+      - "3001:27017"
+    networks:
+      - api
+
+  mongodb2:
+    image: mongo
+    container_name: "mongo_db_2"
+    command: mongod --replSet playground-mongo-set
+    volumes:
+      - ./data/mongodb2:/data/db
+    ports:
+      - "3002:27017"
+    networks:
+      - api
+        
+  mongodb3:
+    image: mongo
+    container_name: "mongo_db_3"
+    command: mongod --replSet playground-mongo-set
+    volumes:
+      - ./data/mongodb3:/data/db
+    ports:
+      - "3003:27017"
+    networks:
+      - api
+
+networks:
+    api:
+      driver: bridge
+
